@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Folha de Pagamento - Junior P. Colombo</title>
+<style>
+:root{
+  --verde:#0f6b3b; --verde2:#198754; --verde3:#dff1e6; --verde4:#edf8f1;
+  --escuro:#18342a; --cinza:#6c757d; --borda:#b8c9bf; --fundo:#f4f7f5;
+  --branco:#fff; --perigo:#b02a37; --amarelo:#fff3cd; --azul:#0d6efd;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--fundo);color:#1f2925}
+header{background:linear-gradient(135deg,var(--verde),#0a4e2b);color:white;padding:24px 18px;box-shadow:0 3px 12px #0002}
+.header-wrap{max-width:1250px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+h1{margin:0;font-size:clamp(25px,4vw,40px)} .sub{margin-top:6px;opacity:.92}.autor{font-weight:bold;background:#ffffff20;padding:10px 14px;border-radius:10px}
+main{max-width:1250px;margin:22px auto;padding:0 15px 40px}.grid{display:grid;grid-template-columns:340px 1fr;gap:18px}.card{background:#fff;border:1px solid #d8e2dc;border-radius:14px;padding:18px;box-shadow:0 2px 8px #0000000b}.card h2,.card h3{margin-top:0;color:var(--verde)}
+.checks{display:grid;gap:7px}.check{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid #dce8e0;border-radius:8px;background:#fbfdfc;flex-wrap:wrap}.check>input{width:19px;height:19px;accent-color:var(--verde2)}.campo-opcional{margin-left:27px;flex:1}.campo-opcional input{width:100%;height:auto;padding:7px 9px;border:1px solid var(--borda);border-radius:7px}
+label{font-weight:700;font-size:14px}.field{margin-bottom:12px}.field input,.field select{width:100%;padding:10px;border:1px solid var(--borda);border-radius:8px;font-size:15px}.small-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{border:0;border-radius:9px;padding:11px 14px;font-weight:700;cursor:pointer;font-size:14px}.btn-green{background:var(--verde2);color:#fff}.btn-dark{background:var(--escuro);color:#fff}.btn-light{background:#e8f3ec;color:var(--verde)}.btn-red{background:#b02a37;color:white}.btn-blue{background:#0d6efd;color:white}.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.hidden{display:none!important}.notice{background:#eef8f2;border-left:5px solid var(--verde2);padding:12px;border-radius:7px;margin-bottom:14px;line-height:1.45}.warning{background:var(--amarelo);border-left-color:#ffc107}.problem{font-size:18px;line-height:1.62;background:#fff;border:2px dashed #94b7a2;padding:18px;border-radius:12px;min-height:130px}.problem strong{color:var(--verde)}
+.timer{display:flex;align-items:center;justify-content:space-between;background:#173e2e;color:white;padding:14px;border-radius:12px;margin-bottom:15px}.timer-time{font-size:38px;font-weight:800;font-variant-numeric:tabular-nums}.timer.expired{background:#8e1f2d;animation:pulse .75s 3}@keyframes pulse{50%{opacity:.6}}
+.payroll{border:3px solid #397c52;background:#f7fff9;margin-top:16px;font-size:14px}.pay-head{background:#427d55;color:white;padding:10px;display:grid;grid-template-columns:1.4fr 1fr;gap:10px}.pay-head h2{color:white;margin:0;font-size:22px}.pay-meta{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #61916f}.cell{padding:8px;border-right:1px solid #8ab497;min-height:48px}.cell:last-child{border-right:0}.cell span{display:block;font-size:11px;color:#4b6b57;text-transform:uppercase;font-weight:bold;margin-bottom:4px}.pay-table{width:100%;border-collapse:collapse}.pay-table th{background:#cce8d3;color:#214c31;border:1px solid #8bb497;padding:7px}.pay-table td{border:1px solid #b0cbb8;padding:7px}.num{text-align:right;font-variant-numeric:tabular-nums}.pay-total{display:grid;grid-template-columns:repeat(4,1fr);background:#dff1e4;border-top:2px solid #397c52}.total-box{padding:10px;border-right:1px solid #87aa91}.total-box:last-child{border:0}.total-box b{display:block;font-size:18px;color:#164b2c;margin-top:3px}.fgts-note{padding:9px;background:#edf8f0;border-top:1px solid #9cc1a6}.solution{margin-top:18px}.calc-step{padding:10px 12px;margin:8px 0;background:#f5faf7;border-left:4px solid var(--verde2);line-height:1.5}.calc-step b{color:var(--verde)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.tab{background:#e7efe9;color:#244c31}.tab.active{background:var(--verde);color:white}.table-wrap{overflow:auto}table.ref{width:100%;border-collapse:collapse;min-width:580px}table.ref th,table.ref td{padding:8px;border:1px solid #cddbd2;text-align:left}table.ref th{background:var(--verde);color:white}.legal{font-size:12px;color:#526259;line-height:1.45}
+.teacher-bar{position:sticky;bottom:8px;background:#ffffffee;backdrop-filter:blur(8px);padding:10px;border:1px solid #cddfd3;border-radius:12px;display:flex;gap:8px;flex-wrap:wrap;z-index:5}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.pay-meta,.pay-total{grid-template-columns:1fr 1fr}.teacher-bar{position:static}}
+@media(max-width:560px){.small-grid,.pay-meta,.pay-total{grid-template-columns:1fr}.timer{align-items:flex-start;flex-direction:column;gap:8px}.pay-head{grid-template-columns:1fr}.autor{width:100%}}
+body.projector main{max-width:1500px}.projector .config-panel,.projector .reference-card{display:none}.projector .grid{grid-template-columns:1fr}.projector .problem{font-size:clamp(22px,2.1vw,34px)}.projector .timer-time{font-size:54px}.projector header{padding:14px}.projector .payroll{font-size:18px}
+@media print{header,.config-panel,.timer,.teacher-bar,.reference-card,.buttons.no-print{display:none!important}body{background:white}.card{box-shadow:none;border:none;padding:0}.grid{display:block}.payroll{break-inside:avoid}.solution.hidden{display:block!important}}
+</style>
+</head>
+<body>
+<header>
+ <div class="header-wrap"><div><h1>Gerador de Folha de Pagamento</h1><div class="sub">Legislação Trabalhista e Previdenciária • Regras 2026</div></div><div class="autor">Prof. Junior P. Colombo</div></div>
+</header>
+<main>
+<div class="grid">
+<section class="card config-panel">
+ <h2>1. Itens da atividade</h2>
+ <div class="notice">Marque somente os eventos que deseja trabalhar. Para a aula inicial, use <b>Salário mensal, Horas extras, Faltas, INSS, IRRF e FGTS</b>.</div>
+ <div class="checks" id="checks">
+  <label class="check"><input type="checkbox" data-key="he50" checked onchange="toggleCampo('campoHe50',this.checked);atualizarDSRExtras()"> Horas extras 50% <span id="campoHe50" class="campo-opcional"><input id="he50Manual" type="number" min="0" step="0.5" placeholder="Horas (vazio = sorteio)"></span></label>
+  <label class="check"><input type="checkbox" data-key="he100" onchange="toggleCampo('campoHe100',this.checked);atualizarDSRExtras()"> Horas extras 100% <span id="campoHe100" class="campo-opcional hidden"><input id="he100Manual" type="number" min="0" step="0.5" placeholder="Horas (vazio = sorteio)"></span></label>
+  <label class="check"><input type="checkbox" data-key="faltas" checked onchange="toggleCampo('campoFaltas',this.checked);toggleCampo('campoSemanasFalta',this.checked);atualizarDSRFaltas()"> Faltas injustificadas <span id="campoFaltas" class="campo-opcional"><input id="faltasManual" type="number" min="0" step="1" placeholder="Dias (vazio = sorteio)"></span></label>
+  <label class="check"><input id="dsrFaltasCheck" type="checkbox" data-key="dsrfaltas" checked disabled> DSR sobre faltas injustificadas (automático)</label>
+  <label class="check"><input id="dsrExtrasCheck" type="checkbox" data-key="dsrhe" checked disabled> DSR sobre horas extras (automático)</label>
+  <label class="check"><input type="checkbox" data-key="comissao"> Comissão</label>
+  <label class="check"><input type="checkbox" data-key="gratificacao"> Gratificação</label>
+  <label class="check"><input type="checkbox" data-key="noturno"> Adicional noturno</label>
+  <label class="check"><input type="checkbox" data-key="insalubridade"> Insalubridade</label>
+  <label class="check"><input type="checkbox" data-key="periculosidade"> Periculosidade</label>
+  <label class="check"><input type="checkbox" data-key="dependentes"> Dependentes para IRRF</label>
+  <label class="check"><input type="checkbox" data-key="vt"> Vale-transporte (desconto)</label>
+  <label class="check"><input type="checkbox" data-key="inss" checked disabled> INSS (obrigatório)</label>
+  <label class="check"><input type="checkbox" data-key="irrf" checked disabled> IRRF (obrigatório)</label>
+  <label class="check"><input type="checkbox" data-key="fgts" checked disabled> FGTS (obrigatório)</label>
+ </div>
+ <h3 style="margin-top:18px">2. Configuração</h3>
+ <div class="field"><label>Nome do funcionário</label><input id="nome" value="Sr. Faz Tudo na Empresa"></div>
+ <div class="small-grid">
+  <div class="field"><label>Salário base (R$) <small>(vazio = sorteio)</small></label><input id="salario" type="number" min="1621" step="10" placeholder="Aleatório"></div>
+  <div class="field"><label>Divisor mensal</label><select id="divisor"><option>220</option><option>200</option><option>180</option><option>150</option><option>120</option></select></div>
+ </div>
+ <div class="small-grid">
+  <div class="field"><label>Competência</label><input id="competencia" value="08/2026"></div>
+  <div class="field"><label>Tempo da atividade</label><select id="tempo"><option value="300">5 minutos</option><option value="600" selected>10 minutos</option><option value="900">15 minutos</option><option value="1200">20 minutos</option><option value="1800">30 minutos</option></select></div>
+ </div>
+ <div class="small-grid">
+  <div class="field"><label>Dias úteis do mês</label><input id="diasUteis" type="number" value="25" min="1" max="31"></div>
+  <div class="field"><label>Dias não úteis (DSR/feriados)</label><input id="diasNaoUteis" type="number" value="5" min="0" max="15"></div>
+ </div>
+ <div id="campoSemanasFalta" class="field"><label>Semanas com falta <small>(opcional; vazio = sorteio)</small></label><input id="semanasFaltaManual" type="number" min="0" step="1" placeholder="Aleatório"></div>
+ <div class="buttons"><button class="btn-green" onclick="gerarProblema()">🎲 Gerar problema</button><button class="btn-light" onclick="novoFuncionario()">↻ Novo cenário</button></div>
+</section>
+<section>
+ <div class="card">
+  <div class="timer" id="timerBox"><div><b>TEMPORIZADOR DA ATIVIDADE</b><div style="font-size:12px;opacity:.8">O alarme tocará ao término.</div></div><div class="timer-time" id="timerDisplay">10:00</div><div class="buttons" style="margin:0"><button class="btn-light" onclick="iniciarTimer()">▶ Iniciar</button><button class="btn-light" onclick="pausarTimer()">⏸ Pausar</button><button class="btn-light" onclick="resetTimer()">↺</button></div></div>
+  <h2>Situação-problema</h2><div class="problem" id="problema">Clique em <b>Gerar problema</b> para criar a atividade.</div>
+  <div class="teacher-bar"><button class="btn-dark" onclick="toggleProjector()">📽 Modo projetor</button><button class="btn-green" onclick="mostrarResultado()">✓ Mostrar resultado</button><button class="btn-light" onclick="ocultarResultado()">Ocultar resultado</button><button class="btn-blue" onclick="window.print()">🖨 Imprimir</button><button class="btn-light" onclick="voltarPrincipal()">⌂ Tela principal</button></div>
+  <div id="resultado" class="solution hidden"></div>
+ </div>
+</section>
+</div>
+<section class="card reference-card" style="margin-top:18px">
+ <h2>Tabelas para consulta em sala • 2026</h2>
+ <div class="tabs"><button class="tab active" onclick="tabRef('inss',this)">INSS 2026</button><button class="tab" onclick="tabRef('irrf',this)">IRRF 2026</button><button class="tab" onclick="tabRef('fgts',this)">FGTS</button></div>
+ <div id="ref-inss" class="refpane"><div class="table-wrap"><table class="ref"><tr><th>Salário de contribuição</th><th>Alíquota</th><th>Parcela a deduzir (auxiliar)</th><th>Fórmula direta</th></tr><tr><td>Até R$ 1.621,00</td><td>7,5%</td><td>R$ 0,00</td><td>Base × 7,5%</td></tr><tr><td>R$ 1.621,01 a R$ 2.902,84</td><td>9%</td><td>R$ 24,32</td><td>(Base × 9%) − R$ 24,32</td></tr><tr><td>R$ 2.902,85 a R$ 4.354,27</td><td>12%</td><td>R$ 111,40</td><td>(Base × 12%) − R$ 111,40</td></tr><tr><td>R$ 4.354,28 a R$ 8.475,55</td><td>14%</td><td>R$ 198,49</td><td>(Base × 14%) − R$ 198,49</td></tr></table></div><p class="legal"><b>Tabela auxiliar para cálculo direto:</b> as faixas e alíquotas são as oficiais de 2026. As “parcelas a deduzir” acima são valores matematicamente derivados da progressividade para permitir o cálculo direto em uma única operação. O sistema mantém internamente o cálculo faixa a faixa e arredonda o resultado final para centavos, evitando diferenças de arredondamento.</p></div>
+ <div id="ref-irrf" class="refpane hidden"><div class="table-wrap"><table class="ref"><tr><th>Base de cálculo mensal</th><th>Alíquota</th><th>Parcela a deduzir</th></tr><tr><td>Até R$ 2.428,80</td><td>0%</td><td>R$ 0,00</td></tr><tr><td>R$ 2.428,81 a R$ 2.826,65</td><td>7,5%</td><td>R$ 182,16</td></tr><tr><td>R$ 2.826,66 a R$ 3.751,05</td><td>15%</td><td>R$ 394,16</td></tr><tr><td>R$ 3.751,06 a R$ 4.664,68</td><td>22,5%</td><td>R$ 675,49</td></tr><tr><td>Acima de R$ 4.664,68</td><td>27,5%</td><td>R$ 908,73</td></tr></table></div><div class="notice" style="margin-top:12px"><b>Observações importantes — IRRF 2026:</b><br>• <b>Dedução mensal por dependente:</b> R$ 189,59.<br>• <b>Desconto simplificado mensal:</b> até R$ 607,20. Ele substitui as deduções legais quando for mais vantajoso ao trabalhador.<br>• <b>Rendimentos tributáveis até R$ 5.000,00:</b> a redução mensal pode zerar o IRRF devido.<br>• <b>De R$ 5.000,01 até R$ 7.350,00:</b> aplica-se redução decrescente do imposto, calculada por R$ 978,62 − (0,133145 × rendimentos tributáveis sujeitos à incidência mensal).<br>• <b>Acima de R$ 7.350,00:</b> não há essa redução adicional.<br>• Para a <b>tabela de redução</b>, considera-se o rendimento tributável mensal, e não a base de cálculo já reduzida pelas deduções.</div><p class="legal">Fonte: Receita Federal do Brasil — Tributação de 2026. O sistema compara deduções legais e desconto simplificado e aplica automaticamente a alternativa mais vantajosa antes de calcular a redução mensal prevista para 2026.</p></div>
+ <div id="ref-fgts" class="refpane hidden"><div class="notice"><b>FGTS:</b> regra geral de 8% sobre a remuneração. Para aprendiz, 2%. O FGTS é depósito do empregador e <b>não é desconto do salário líquido do empregado</b>.</div></div>
+ <p class="legal"><b>Faltas injustificadas:</b> no modelo didático do mensalista, o sistema desconta o dia da ausência e, quando selecionado, 1 DSR para cada semana em que houver falta injustificada, evitando multiplicar DSR pelo número de faltas ocorridas na mesma semana. Uso didático. O sistema não substitui folha oficial/eSocial; instrumentos coletivos e situações especiais devem ser verificados no caso concreto.</p>
+</section>
+</main>
+<script>
+const BRL=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
+function toggleCampo(id,mostrar){document.getElementById(id).classList.toggle('hidden',!mostrar)}
+function atualizarDSRExtras(){const ativo=marcado('he50')||marcado('he100'), el=document.getElementById('dsrExtrasCheck');el.checked=ativo;el.disabled=true}
+function atualizarDSRFaltas(){const ativo=marcado('faltas'), el=document.getElementById('dsrFaltasCheck');el.checked=ativo;el.disabled=true}
+window.addEventListener('DOMContentLoaded',()=>{atualizarDSRExtras();atualizarDSRFaltas()});
+const money=v=>BRL.format(Number(v)||0); const rnd=(a,b,step=1)=>Math.round((Math.floor(Math.random()*((b-a)/step+1))*step+a)*100)/100;
+let cenario=null, timerId=null, restante=600;
+function marcado(k){const el=document.querySelector(`[data-key="${k}"]`);return !!el?.checked}
+function calcINSS(base){
+ let b=Math.min(Math.max(base,0),8475.55), total=0, anterior=0;
+ const faixas=[[1621,0.075],[2902.84,0.09],[4354.27,0.12],[8475.55,0.14]];
+ for(const [lim,aliq] of faixas){if(b>anterior){const faixa=Math.min(b,lim)-anterior;if(faixa>0)total+=faixa*aliq;} anterior=lim;if(b<=lim)break;}
+ return Math.round(total*100)/100;
+}
+function infoINSS(base){
+ const b=Math.min(Math.max(base,0),8475.55);
+ let aliq=.075, parcela=0, faixa='Até R$ 1.621,00';
+ if(b>4354.27){aliq=.14;parcela=198.49;faixa='R$ 4.354,28 a R$ 8.475,55'}
+ else if(b>2902.84){aliq=.12;parcela=111.40;faixa='R$ 2.902,85 a R$ 4.354,27'}
+ else if(b>1621){aliq=.09;parcela=24.32;faixa='R$ 1.621,01 a R$ 2.902,84'}
+ const direto=Math.max(0,b*aliq-parcela);
+ return {base:b,aliq,parcela,faixa,direto:Math.round(direto*100)/100};
+}
+function calcIRRF(rendTrib,inss,dependentes){
+ const dedLegais=inss+(dependentes*189.59), simpl=607.20, deducao=Math.max(dedLegais,simpl), metodo=simpl>dedLegais?'Desconto simplificado mensal':'Deduções legais';
+ const base=Math.max(0,rendTrib-deducao); let imposto=0,aliq=0,parcela=0;
+ if(base<=2428.80){aliq=0;parcela=0}else if(base<=2826.65){aliq=.075;parcela=182.16}else if(base<=3751.05){aliq=.15;parcela=394.16}else if(base<=4664.68){aliq=.225;parcela=675.49}else{aliq=.275;parcela=908.73}
+ imposto=Math.max(0,base*aliq-parcela); let reducao=0;
+ if(rendTrib<=5000){reducao=Math.min(imposto,312.89)} else if(rendTrib<=7350){reducao=Math.min(imposto,Math.max(0,978.62-(0.133145*rendTrib)))}
+ return {valor:Math.max(0,Math.round((imposto-reducao)*100)/100),base:Math.round(base*100)/100,aliq,parcela,dedLegais:Math.round(dedLegais*100)/100,simpl,metodo,deducao:Math.round(deducao*100)/100,impostoAntes:Math.round(imposto*100)/100,reducao:Math.round(reducao*100)/100};
+}
+function gerarProblema(){
+ const sal=Number(document.getElementById('salario').value)||rnd(2000,8000,100), divisor=Number(document.getElementById('divisor').value)||220;
+ const opcional=id=>{const v=document.getElementById(id).value;return v===''?null:Math.max(0,Number(v)||0)};
+ const he50Manual=opcional('he50Manual'), he100Manual=opcional('he100Manual'), faltasManual=opcional('faltasManual'), semanasManual=opcional('semanasFaltaManual');
+ const he50=marcado('he50')?(he50Manual??rnd(4,18,2)):0, he100=marcado('he100')?(he100Manual??rnd(2,10,2)):0, faltas=marcado('faltas')?(faltasManual??rnd(1,3)):0;
+ const semanasComFalta=(faltas&&marcado('dsrfaltas'))?Math.min(faltas,semanasManual??rnd(1,Math.min(faltas,3))):0;
+ const diasUteis=marcado('dsrhe')?Math.max(1,Number(document.getElementById('diasUteis').value)||0):0, dsrDias=marcado('dsrhe')?Math.max(0,Number(document.getElementById('diasNaoUteis').value)||0):0, comissao=marcado('comissao')?rnd(150,700,50):0, grat=marcado('gratificacao')?rnd(100,500,50):0;
+ const horasNot=marcado('noturno')?rnd(10,40,5):0, insal=marcado('insalubridade')?[.1,.2,.4][rnd(0,2)]:0, peric=marcado('periculosidade')?.30:0, deps=marcado('dependentes')?rnd(0,3):0;
+ const vt=marcado('vt')?true:false;
+ cenario={nome:document.getElementById('nome').value||'Sr. Faz Tudo na Empresa',competencia:document.getElementById('competencia').value||'08/2026',sal,divisor,he50,he100,faltas,semanasComFalta,diasUteis,dsrDias,comissao,grat,horasNot,insal,peric,deps,vt};
+ const itens=[]; itens.push(`salário mensal de <strong>${money(sal)}</strong>`); if(he50)itens.push(`<strong>${he50} horas extras a 50%</strong>`); if(he100)itens.push(`<strong>${he100} horas extras a 100%</strong>`); if(faltas)itens.push(`<strong>${faltas} dia(s) de falta injustificada</strong>${semanasComFalta?`, ocorrida(s) em <strong>${semanasComFalta} semana(s) distinta(s)</strong>`:''}`); if(diasUteis)itens.push(`para o DSR sobre extras, considere <strong>${diasUteis} dias úteis e ${dsrDias} DSR/feriados</strong>`); if(comissao)itens.push(`comissão de <strong>${money(comissao)}</strong>`); if(grat)itens.push(`gratificação de <strong>${money(grat)}</strong>`); if(horasNot)itens.push(`<strong>${horasNot} horas noturnas</strong>, com adicional didático de 20%`); if(insal)itens.push(`adicional de insalubridade de <strong>${insal*100}%</strong>, calculado neste exercício sobre o salário mínimo de 2026 (${money(1621)})`); if(peric)itens.push(`adicional de periculosidade de <strong>30%</strong> sobre o salário-base`); if(deps)itens.push(`<strong>${deps} dependente(s)</strong> para IRRF`); if(vt)itens.push(`vale-transporte com desconto de <strong>6% do salário-base</strong>`);
+ const pedir=[]; if(marcado('inss'))pedir.push('INSS'); if(marcado('irrf'))pedir.push('IRRF'); if(marcado('fgts'))pedir.push('FGTS');
+ document.getElementById('problema').innerHTML=`A empresa <strong>Verde Vale Serviços Ltda.</strong> precisa elaborar a folha de pagamento de <strong>${cenario.nome}</strong>, competência <strong>${cenario.competencia}</strong>. O empregado possui ${itens.join(', ')}.<br><br>Calcule os proventos, descontos${pedir.length?' ('+pedir.join(', ')+')':''}, o <strong>salário líquido</strong> e, quando selecionado, o valor do FGTS a depositar.`;
+ montarResultado(); ocultarResultado(); resetTimer();
+}
+function montarResultado(){if(!cenario)return; const c=cenario, vh=c.sal/c.divisor, valorDia=c.sal/30, falta=valorDia*c.faltas, dsrFalta=valorDia*(c.semanasComFalta||0), v50=vh*1.5*c.he50, v100=vh*2*c.he100, vnot=vh*.20*c.horasNot, vinsal=1621*c.insal, vperic=c.sal*c.peric;
+ const totalHE=v50+v100, dsr=c.diasUteis?totalHE/c.diasUteis*c.dsrDias:0; const bruto=Math.max(0,c.sal-falta-dsrFalta+v50+v100+dsr+c.comissao+c.grat+vnot+vinsal+vperic);
+ const baseINSS=bruto, inss=marcado('inss')?calcINSS(baseINSS):0; const ir=marcado('irrf')?calcIRRF(bruto,inss,c.deps):{valor:0}; const descontoVT=c.vt?Math.min(c.sal*.06,c.sal*.06):0; const descontos=falta+dsrFalta+inss+ir.valor+descontoVT; const proventos=c.sal+v50+v100+dsr+c.comissao+c.grat+vnot+vinsal+vperic; const liquido=Math.max(0,proventos-descontos); const fgts=marcado('fgts')?bruto*.08:0;
+ const iiFolha=infoINSS(baseINSS), irRef=ir.aliq?`${(ir.aliq*100).toLocaleString('pt-BR')}%`:'Isento'; const linhas=[]; linhas.push(['001','Salário mensal','30 dias',money(c.sal),'']); if(c.he50)linhas.push(['101','Horas extras 50%',`${c.he50} h`,money(v50),'']); if(c.he100)linhas.push(['102','Horas extras 100%',`${c.he100} h`,money(v100),'']); if(dsr)linhas.push(['103','DSR sobre horas extras',`${c.dsrDias} dias`,money(dsr),'']); if(c.comissao)linhas.push(['110','Comissão','Variável',money(c.comissao),'']); if(c.grat)linhas.push(['111','Gratificação','Mensal',money(c.grat),'']); if(c.horasNot)linhas.push(['112','Adicional noturno',`${c.horasNot} h`,money(vnot),'']); if(c.insal)linhas.push(['113','Insalubridade',`${c.insal*100}%`,money(vinsal),'']); if(c.peric)linhas.push(['114','Periculosidade','30%',money(vperic),'']); if(c.faltas)linhas.push(['201','Faltas injustificadas',`${c.faltas} dia(s)`,'',money(falta)]); if(dsrFalta)linhas.push(['205','DSR sobre faltas',`${c.semanasComFalta} semana(s)`,'',money(dsrFalta)]); if(marcado('inss'))linhas.push(['202','INSS',`${(iiFolha.aliq*100).toLocaleString('pt-BR')}%`,'',money(inss)]); if(marcado('irrf'))linhas.push(['203','IRRF',irRef,'',money(ir.valor)]); if(c.vt)linhas.push(['204','Vale-transporte','6%','',money(descontoVT)]);
+ let passos=`<h2>Resolução do professor</h2><div class="calc-step"><b>1. Valor da hora:</b> ${money(c.sal)} ÷ ${c.divisor} = <b>${money(vh)}</b></div>`; if(c.he50)passos+=`<div class="calc-step"><b>Hora extra 50%:</b> ${money(vh)} × 1,50 × ${c.he50} = <b>${money(v50)}</b></div>`; if(c.he100)passos+=`<div class="calc-step"><b>Hora extra 100%:</b> ${money(vh)} × 2 × ${c.he100} = <b>${money(v100)}</b></div>`; if(c.faltas)passos+=`<div class="calc-step"><b>Faltas injustificadas:</b> ${money(c.sal)} ÷ 30 = ${money(valorDia)} por dia; ${money(valorDia)} × ${c.faltas} = <b>${money(falta)}</b>.</div>`; if(dsrFalta)passos+=`<div class="calc-step"><b>DSR perdido por faltas injustificadas:</b> como houve falta em ${c.semanasComFalta} semana(s) distinta(s), considera-se 1 DSR perdido por semana afetada neste exercício: ${money(valorDia)} × ${c.semanasComFalta} = <b>${money(dsrFalta)}</b>. Mais de uma falta na mesma semana não gera vários DSRs daquela mesma semana.</div>`; if(dsr)passos+=`<div class="calc-step"><b>DSR sobre HE (critério do exercício):</b> ${money(totalHE)} ÷ ${c.diasUteis} × ${c.dsrDias} = <b>${money(dsr)}</b></div>`; if(marcado('inss')){const ii=infoINSS(baseINSS);passos+=`<div class="calc-step"><b>INSS progressivo:</b> base ${money(baseINSS)} → contribuição = <b>${money(inss)}</b>. As alíquotas incidem faixa a faixa, não sobre o salário inteiro.<br><br><b>Cálculo direto pela tabela auxiliar:</b> a base está na faixa <b>${ii.faixa}</b>. Portanto: ${money(ii.base)} × ${(ii.aliq*100).toLocaleString('pt-BR')}% − R$ ${ii.parcela.toLocaleString('pt-BR',{minimumFractionDigits:ii.parcela===0?2:3,maximumFractionDigits:4})} = <b>${money(ii.direto)}</b>.<br><span class="legal">A parcela a deduzir é um recurso matemático derivado da tabela progressiva oficial; o motor do sistema permanece faixa a faixa.</span></div>`;} if(marcado('irrf'))passos+=`<div class="calc-step"><b>IRRF:</b> deduções legais ${money(ir.dedLegais)} × simplificado ${money(ir.simpl)}. Foi utilizado <b>${ir.metodo}</b> (${money(ir.deducao)}). Base IRRF = ${money(ir.base)}. Imposto antes da redução = ${money(ir.impostoAntes)}; redução 2026 = ${money(ir.reducao)}; <b>IRRF final = ${money(ir.valor)}</b>.</div>`; if(marcado('fgts'))passos+=`<div class="calc-step"><b>FGTS:</b> ${money(bruto)} × 8% = <b>${money(fgts)}</b>. É depósito patronal, portanto não reduz o salário líquido.</div>`;
+ passos+=`<div class="payroll"><div class="pay-head"><div><h2>FOLHA DE PAGAMENTO</h2><div>Verde Vale Serviços Ltda.</div></div><div><b>Competência:</b> ${c.competencia}<br><b>Modelo didático 2026</b></div></div><div class="pay-meta"><div class="cell"><span>Funcionário</span>${c.nome}</div><div class="cell"><span>Salário base</span>${money(c.sal)}</div><div class="cell"><span>Divisor</span>${c.divisor} h</div><div class="cell"><span>Dependentes IRRF</span>${c.deps}</div></div><table class="pay-table"><thead><tr><th>Cód.</th><th>Descrição</th><th>Ref.</th><th>Proventos</th><th>Descontos</th></tr></thead><tbody>${linhas.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td class="num">${x[3]}</td><td class="num">${x[4]}</td></tr>`).join('')}</tbody></table><div class="pay-total"><div class="total-box">Total de proventos<b>${money(proventos)}</b></div><div class="total-box">Total de descontos<b>${money(descontos)}</b></div><div class="total-box">Base INSS<b>${money(baseINSS)}</b></div><div class="total-box">Líquido a receber<b>${money(liquido)}</b></div></div>${marcado('fgts')?`<div class="fgts-note"><b>FGTS a depositar pela empresa:</b> ${money(fgts)} — não descontado do empregado.</div>`:''}</div>`;
+ document.getElementById('resultado').innerHTML=passos;
+}
+function mostrarResultado(){if(!cenario)gerarProblema();document.getElementById('resultado').classList.remove('hidden');document.getElementById('resultado').scrollIntoView({behavior:'smooth',block:'start'})}function ocultarResultado(){document.getElementById('resultado').classList.add('hidden')}
+function novoFuncionario(){const nomes=['Ana Paula Martins','Bruno Almeida Costa','Camila Rodrigues Souza','Diego Henrique Santos','Fernanda Oliveira Lima','Gabriel Moreira Silva','Juliana Ferreira Rocha','Lucas Andrade Melo'];document.getElementById('nome').value=nomes[rnd(0,nomes.length-1)];document.getElementById('salario').value=rnd(1800,7200,100);gerarProblema()}
+function toggleProjector(){document.body.classList.toggle('projector');window.scrollTo({top:0,behavior:'smooth'})} function voltarPrincipal(){document.body.classList.remove('projector');ocultarResultado();window.scrollTo({top:0,behavior:'smooth'})}
+function tabRef(id,btn){document.querySelectorAll('.refpane').forEach(x=>x.classList.add('hidden'));document.querySelector('#ref-'+id).classList.remove('hidden');document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active')}
+function atualizarTimer(){const m=Math.floor(restante/60),s=restante%60;document.getElementById('timerDisplay').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+function iniciarTimer(){if(timerId)return; if(restante<=0)resetTimer(); timerId=setInterval(()=>{restante--;atualizarTimer();if(restante<=0){pausarTimer();document.getElementById('timerBox').classList.add('expired');alarme()}},1000)}function pausarTimer(){clearInterval(timerId);timerId=null}function resetTimer(){pausarTimer();restante=Number(document.getElementById('tempo').value)||600;document.getElementById('timerBox').classList.remove('expired');atualizarTimer()}
+function alarme(){try{const A=window.AudioContext||window.webkitAudioContext,ctx=new A();[0,.35,.7].forEach(t=>{const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=880;o.connect(g);g.connect(ctx.destination);g.gain.setValueAtTime(.15,ctx.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+t+.25);o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+.26)})}catch(e){}}
+document.getElementById('tempo').addEventListener('change',resetTimer);document.querySelectorAll('#checks input').forEach(x=>x.addEventListener('change',()=>{if(cenario)gerarProblema()}));
+resetTimer();
+</script>
+</body>
+</html>
